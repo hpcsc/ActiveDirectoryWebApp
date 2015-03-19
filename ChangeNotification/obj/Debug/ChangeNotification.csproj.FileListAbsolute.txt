@@ -1,6 +1,0 @@
-F:\Personal\ASP.NET MVC\ActiveDirectoryWebApp\ChangeNotification\bin\Debug\ChangeNotification.exe.config
-F:\Personal\ASP.NET MVC\ActiveDirectoryWebApp\ChangeNotification\bin\Debug\ChangeNotification.exe
-F:\Personal\ASP.NET MVC\ActiveDirectoryWebApp\ChangeNotification\bin\Debug\ChangeNotification.pdb
-F:\Personal\ASP.NET MVC\ActiveDirectoryWebApp\ChangeNotification\obj\Debug\ChangeNotification.csprojResolveAssemblyReference.cache
-F:\Personal\ASP.NET MVC\ActiveDirectoryWebApp\ChangeNotification\obj\Debug\ChangeNotification.exe
-F:\Personal\ASP.NET MVC\ActiveDirectoryWebApp\ChangeNotification\obj\Debug\ChangeNotification.pdb
