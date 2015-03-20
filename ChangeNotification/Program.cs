@@ -5,50 +5,64 @@ using System.DirectoryServices.Protocols;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using ChangeNotification;
+using Options = System.DirectoryServices.Protocols.DirectorySynchronizationOptions;
 using SearchScope = System.DirectoryServices.Protocols.SearchScope;
 
-namespace ADChangeNotification
+namespace ChangeNotification
 {
     class Program
     {
         static void Main(string[] args)
         {            
             TrackUsingChangeNotification();           
+            //TrackUsingDirSync();
         }
 
         private static void TrackUsingDirSync()
         {
-            using (var connection = CreateConnection("192.168.3.252"))
+            using (var connection = CreateConnection("192.168.3.253"))
             {
-                var request = new SearchRequest("ou=Samples,dc=david,dc=2359media,dc=com",
+                while (true)
+                {
+                    var request = new SearchRequest("ou=Samples,dc=david,dc=2359media,dc=com",
                     "(|(objectClass=*)(isDeleted=TRUE))", SearchScope.OneLevel, null);
 
-                //var dirSyncRC = new DirSyncRequestControl(cookie, DirectorySynchronizationOptions.IncrementalValues, Int32.MaxValue);
-                //request.Controls.Add(dirSyncRC);
+                    byte[] cookie = null;
+                    var dirSyncRC = new DirSyncRequestControl(cookie, Options.IncrementalValues, Int32.MaxValue);
+                    request.Controls.Add(dirSyncRC);
 
-                var searchResponse = (SearchResponse)connection.SendRequest(request);
+                    var searchResponse = (SearchResponse)connection.SendRequest(request);
 
-                foreach (SearchResultEntry entry in searchResponse.Entries)
-                {
-                    foreach (System.Collections.DictionaryEntry attr in entry.Attributes)
+                    if (searchResponse.Entries.Count > 0)
                     {
-                        Console.WriteLine("{0}: {1}", attr.Key, ((DirectoryAttribute)attr.Value)[0]);
-                        //foreach (var t in attr)
-                        //{
-                        //    //Console.WriteLine("{0}: {1}", t);
-                        //    //Attribute Sub Value below
-                        //    Console.WriteLine(attr.Path);
-                        //}
+                        Console.WriteLine("==================================================");
+                        Console.WriteLine("=============== Change notification ==============");
+
+                        foreach (SearchResultEntry entry in searchResponse.Entries)
+                        {
+                            foreach (System.Collections.DictionaryEntry attr in entry.Attributes)
+                            {
+                                Console.WriteLine("{0}: {1}", attr.Key, ((DirectoryAttribute)attr.Value)[0]);
+                            }
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine("=============== End notification =================");
+                        Console.WriteLine("==================================================");
+                        Console.WriteLine();
                     }
-                }
+                    
+
+                    Thread.Sleep(1000);
+                }                
             }
         }
 
         private static void TrackUsingChangeNotification()
         {
-            using (var connect = CreateConnection("192.168.3.252"))
+            using (var connect = CreateConnection("192.168.3.253"))
             {
                 using (var notifier = new ChangeNotifier(connect))
                 {
@@ -66,7 +80,7 @@ namespace ADChangeNotification
 
         private static LdapConnection CreateConnection(string host)
         {
-            return new LdapConnection(new LdapDirectoryIdentifier(host), new NetworkCredential("hpcsc", "david.123"), AuthType.Ntlm);
+            return new LdapConnection(new LdapDirectoryIdentifier(host), new NetworkCredential("hpcsc", "password.123"), AuthType.Ntlm);
         }
 
         static void notifier_ObjectChanged(object sender, ObjectChangedEventArgs e)

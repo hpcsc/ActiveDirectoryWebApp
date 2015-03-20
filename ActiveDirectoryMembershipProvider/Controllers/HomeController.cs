@@ -43,7 +43,8 @@ namespace ActiveDirectoryMembershipProvider.Controllers
 
             var user = new ActiveDirectoryUser
             {                
-                Email = membershipUser.Email
+                Email = membershipUser.Email,
+                GivenName = membershipUser.UserName
             };
 
             return View(user);
