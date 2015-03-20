@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureActiveDirectory", "Azu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeNotification", "ChangeNotification\ChangeNotification.csproj", "{F6D62022-860F-4A60-B0E5-2A4BB9323C0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADFS", "ADFS\ADFS.csproj", "{B954E6A7-D413-4ECE-A7BC-01B49FBEA882}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{F6D62022-860F-4A60-B0E5-2A4BB9323C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6D62022-860F-4A60-B0E5-2A4BB9323C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6D62022-860F-4A60-B0E5-2A4BB9323C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B954E6A7-D413-4ECE-A7BC-01B49FBEA882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B954E6A7-D413-4ECE-A7BC-01B49FBEA882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B954E6A7-D413-4ECE-A7BC-01B49FBEA882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B954E6A7-D413-4ECE-A7BC-01B49FBEA882}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
