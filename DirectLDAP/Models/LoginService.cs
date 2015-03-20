@@ -20,7 +20,7 @@ namespace DirectLDAP.Models
             {
                 return null;
             }
-
+            
             return new ActiveDirectoryUser
             {
                 GivenName = userPrincipal.GivenName,
