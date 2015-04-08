@@ -1,0 +1,6 @@
+language: csharp
+solution: ActiveDirectoryWebApp.sln
+install:
+  - nuget restore ActiveDirectoryWebApp.sln
+script:
+  - xbuild /p:Configuration=Release ActiveDirectoryWebApp.sln
