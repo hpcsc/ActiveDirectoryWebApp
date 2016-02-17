@@ -1,4 +1,5 @@
-﻿using System.DirectoryServices.AccountManagement;
+﻿using System;
+using System.DirectoryServices.AccountManagement;
 
 namespace DirectLDAP.Models
 {
@@ -6,16 +7,16 @@ namespace DirectLDAP.Models
     {
         public bool IsValid(string username, string password)
         {
-            var principalContext = ConnectToActiveDirectory();    
-     
-            return principalContext.ValidateCredentials(username, password);
+            return Execute(context =>
+            {
+                return context.ValidateCredentials(username, password);
+            });
         }
 
         public ActiveDirectoryUser FindUserById(string username)
-        {
-            var principalContext = ConnectToActiveDirectory();            
-            //var userPrincipal = UserPrincipal.FindByIdentity(principalContext, username);
-            var userPrincipal = ExtendedUserPrincipal.FindByIdentity(principalContext, username);
+        {            
+            //var userPrincipal = Execute(context => UserPrincipal.FindByIdentity(context, username));
+            var userPrincipal = Execute(context => ExtendedUserPrincipal.FindByIdentity(context, username));
             if (userPrincipal == null)
             {
                 return null;
@@ -27,6 +28,14 @@ namespace DirectLDAP.Models
                 Surname = userPrincipal.Surname,
                 Email = userPrincipal.EmailAddress
             };
+        }
+
+        private T Execute<T>(Func<PrincipalContext, T> func)
+        {
+            using (var principalContext = ConnectToActiveDirectory())
+            {
+                return func(principalContext);
+            }
         }
 
         private PrincipalContext ConnectToActiveDirectory()
